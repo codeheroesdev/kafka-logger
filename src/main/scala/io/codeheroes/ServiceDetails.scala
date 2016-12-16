@@ -5,6 +5,5 @@ final case class ServiceDetails(hostname: String,
                                 host: String,
                                 service: String,
                                 version: String,
-                                task: String,
-                                security: String)
+                                task: String)
 

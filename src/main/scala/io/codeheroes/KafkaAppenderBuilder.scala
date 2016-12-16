@@ -9,13 +9,12 @@ import com.github.danielwegener.logback.kafka.KafkaAppender
 import com.github.danielwegener.logback.kafka.delivery.{AsynchronousDeliveryStrategy, DeliveryStrategy}
 import com.github.danielwegener.logback.kafka.encoding.{KafkaMessageEncoder, LayoutKafkaMessageEncoder}
 import com.github.danielwegener.logback.kafka.keying.KeyingStrategy
-import io.codeheroes.akka.http.lb.Endpoint
 
-case class KafkaAppenderConfiguration(layout: Layout[ILoggingEvent], serviceDetails: ServiceDetails, appenderName: String = "kafka-appender", kafkaTopic: String = "upload-service-logs")
+case class KafkaAppenderConfiguration(layout: Layout[ILoggingEvent], serviceDetails: ServiceDetails, appenderName: String = "kafka-appender", kafkaTopic: String = "logs")
 
-class KafkaAppenderBuilder(implicit loggerContext: LoggerContext) {
+class KafkaAppenderBuilder(endpoints: List[(String, Int)], configuration: KafkaAppenderConfiguration)(implicit loggerContext: LoggerContext) {
 
-  def build(endpoints: List[Endpoint], configuration: KafkaAppenderConfiguration) = {
+  def build() = {
     val keyingStrategy = new ServiceOrientedKeyingStrategy(configuration.serviceDetails.service, configuration.serviceDetails.hostname, configuration.serviceDetails.host)
     val deliveryStrategy = new AsynchronousDeliveryStrategy()
     val layout = configuration.layout
@@ -31,12 +30,12 @@ class KafkaAppenderBuilder(implicit loggerContext: LoggerContext) {
     encoder
   }
 
-  private def setupKafkaAppender(name: String, topic: String, endpoints: List[Endpoint], encoder: KafkaMessageEncoder[ILoggingEvent], keyingStrategy: KeyingStrategy[ILoggingEvent], deliveryStrategy: DeliveryStrategy) = {
+  private def setupKafkaAppender(name: String, topic: String, endpoints: List[(String, Int)], encoder: KafkaMessageEncoder[ILoggingEvent], keyingStrategy: KeyingStrategy[ILoggingEvent], deliveryStrategy: DeliveryStrategy) = {
     val kafkaAppender = new KafkaAppender[ILoggingEvent]()
     kafkaAppender.setContext(loggerContext)
     kafkaAppender.setName(name)
     kafkaAppender.setEncoder(encoder)
-    kafkaAppender.addProducerConfig(s"bootstrap.servers=${endpoints.map { case Endpoint(host, port) => s"$host:$port" }.mkString(",")}")
+    kafkaAppender.addProducerConfig(s"bootstrap.servers=${endpoints.map { case (host, port) => s"$host:$port" }.mkString(",")}")
     kafkaAppender.setKeyingStrategy(keyingStrategy)
     kafkaAppender.setDeliveryStrategy(deliveryStrategy)
     kafkaAppender.setTopic(topic)

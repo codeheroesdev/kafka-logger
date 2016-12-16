@@ -6,7 +6,6 @@ import ch.qos.logback.core.LayoutBase
 import org.json4s.DefaultFormats
 
 
-
 class JSONLayout(serviceDetails: ServiceDetails, stackTraceConverter: ThrowableHandlingConverter = new ExtendedThrowableProxyConverter) extends LayoutBase[ILoggingEvent] {
 
   import org.json4s.native.Serialization._
@@ -27,11 +26,15 @@ class JSONLayout(serviceDetails: ServiceDetails, stackTraceConverter: ThrowableH
       "level" -> event.getLevel.toString,
       "task" -> serviceDetails.task,
       "time" -> event.getTimeStamp,
-      "security" -> serviceDetails.security,
       "content" -> event.getFormattedMessage,
       "stackTrace" -> stackTraceConverter.convert(event)
     )
     writePretty(eventInMap)
+  }
+
+  override def stop() = {
+    super.stop()
+    stackTraceConverter.stop()
   }
 
 }
