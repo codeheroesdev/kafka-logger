@@ -1,4 +1,4 @@
-package io.codeheroes
+package io.codeheroes.kafkalogger
 
 import ch.qos.logback.classic.spi.ILoggingEvent
 import com.github.danielwegener.logback.kafka.keying.KeyingStrategy

@@ -1,4 +1,4 @@
-package io.codeheroes
+package io.codeheroes.kafkalogger
 
 import ch.qos.logback.classic.pattern.{ExtendedThrowableProxyConverter, ThrowableHandlingConverter}
 import ch.qos.logback.classic.spi.ILoggingEvent
@@ -26,7 +26,7 @@ class JSONLayout(serviceDetails: ServiceDetails, stackTraceConverter: ThrowableH
       "level" -> event.getLevel.toString,
       "task" -> serviceDetails.task,
       "time" -> event.getTimeStamp,
-      "content" -> event.getFormattedMessage,
+      "message" -> event.getFormattedMessage,
       "stackTrace" -> stackTraceConverter.convert(event)
     )
     writePretty(eventInMap)

@@ -1,4 +1,4 @@
-package io.codeheroes
+package io.codeheroes.kafkalogger
 
 import java.nio.charset.StandardCharsets
 

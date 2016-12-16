@@ -1,4 +1,4 @@
-package io.codeheroes
+package io.codeheroes.kafkalogger
 
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.spi.ILoggingEvent

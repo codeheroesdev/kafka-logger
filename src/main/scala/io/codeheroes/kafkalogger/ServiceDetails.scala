@@ -1,5 +1,4 @@
-package io.codeheroes
-
+package io.codeheroes.kafkalogger
 
 final case class ServiceDetails(hostname: String,
                                 host: String,

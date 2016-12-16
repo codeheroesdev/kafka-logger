@@ -11,9 +11,6 @@ object Dependencies {
 
   val loggingDependencies = Seq(
     "ch.qos.logback" % "logback-classic" % logbackVersion,
-    "ch.qos.logback" % "logback-core" % logbackVersion,
-    "org.slf4j" % "jcl-over-slf4j" % slf4jVersion,
-    "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion,
     "com.github.danielwegener" % "logback-kafka-appender" % "0.1.0"
   )
 
@@ -25,9 +22,5 @@ object Dependencies {
     loggingDependencies,
     jsonDependencies
   ).reduce(_ ++ _)
-
-  val additionalResolvers = Seq(
-    "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
-  )
 
 }
