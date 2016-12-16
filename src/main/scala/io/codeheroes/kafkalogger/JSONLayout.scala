@@ -24,7 +24,7 @@ class JSONLayout(serviceDetails: ServiceDetails, stackTraceConverter: ThrowableH
       "version" -> serviceDetails.version,
       "thread" -> event.getThreadName,
       "level" -> event.getLevel.toString,
-      "task" -> serviceDetails.task,
+      "task" -> serviceDetails.task.getOrElse(""),
       "time" -> event.getTimeStamp,
       "message" -> event.getFormattedMessage,
       "stackTrace" -> stackTraceConverter.convert(event)

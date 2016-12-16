@@ -22,4 +22,12 @@ class HeroLogger(
 
 }
 
+object HeroLogger {
+
+  def single(appender: Appender[ILoggingEvent], additive: Boolean = false, removeDefaultAppenders: Boolean = false)(implicit loggerContext: LoggerContext) = {
+    new HeroLogger(List(appender), additive, removeDefaultAppenders)
+  }
+
+}
+
 
