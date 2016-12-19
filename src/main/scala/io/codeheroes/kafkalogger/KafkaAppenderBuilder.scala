@@ -10,7 +10,7 @@ import com.github.danielwegener.logback.kafka.delivery.{AsynchronousDeliveryStra
 import com.github.danielwegener.logback.kafka.encoding.{KafkaMessageEncoder, LayoutKafkaMessageEncoder}
 import com.github.danielwegener.logback.kafka.keying.KeyingStrategy
 
-case class KafkaAppenderConfiguration(layout: Layout[ILoggingEvent], serviceDetails: ServiceDetails, appenderName: String = "kafka-appender", kafkaTopic: String = "logs")
+case class KafkaAppenderConfiguration(layout: Layout[ILoggingEvent], serviceDetails: ServiceDetails, appenderName: String = "kafka-appender", kafkaTopic: String)
 
 class KafkaAppenderBuilder(endpoints: List[(String, Int)], configuration: KafkaAppenderConfiguration)(implicit loggerContext: LoggerContext) {
 

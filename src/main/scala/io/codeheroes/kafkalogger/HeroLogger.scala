@@ -17,6 +17,7 @@ class HeroLogger(
     if (removeDefaultAppenders) root.detachAndStopAllAppenders()
     root.setAdditive(additive)
     appenders.foreach(root.addAppender)
+    loggerContext.start()
     root
   }
 
@@ -28,6 +29,10 @@ object HeroLogger {
     new HeroLogger(List(appender), additive, removeDefaultAppenders)
   }
 
+  def withDefaultKafkaAppender(endpoints: List[(String, Int)], serviceDetails: ServiceDetails, kafkaTopic: String = "logs")(implicit loggerContext: LoggerContext) = {
+    val layout = new JSONLayout(serviceDetails)
+    val config = KafkaAppenderConfiguration(layout, serviceDetails, kafkaTopic = kafkaTopic)
+    new HeroLogger(List(new KafkaAppenderBuilder(endpoints, config).build()))
+  }
+
 }
-
-
