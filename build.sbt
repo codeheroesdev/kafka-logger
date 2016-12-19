@@ -1,5 +1,5 @@
 name := "kafka-logger"
-version := "0.1"
+version := "0.2"
 
 bintrayOrganization := Some("codeheroes")
 bintrayPackage := "kafka-logger"
